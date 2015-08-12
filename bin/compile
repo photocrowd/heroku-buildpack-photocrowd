@@ -9,12 +9,14 @@ puts-step() {
     echo "-----> $@"
 }
 
+BUILD_DIR=$1
+
 
 puts-step "Collecting static" 
-python manage.py collectstatic --noinput  2>&1 | sed '/^Copying/d;/^$/d;/^ /d' | indent
+python $BUILD_DIR/manage.py collectstatic --noinput  2>&1 | sed '/^Copying/d;/^$/d;/^ /d' | indent
 
 puts-step "Compressing" 
-python manage.py compress 2>&1 | indent
+python $BUILD_DIR/manage.py compress 2>&1 | indent
 
 puts-step "Migrating" 
-python manage.py migrate
+python $BUILD_DIR/manage.py migrate

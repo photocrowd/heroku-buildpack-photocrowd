@@ -10,13 +10,15 @@ puts-step() {
 }
 
 BUILD_DIR=$1
+# From the python buildpack
+PYTHON_EXE="/app/.heroku/python/bin/python"
 
 
 puts-step "Collecting static" 
-python $BUILD_DIR/manage.py collectstatic --noinput  2>&1 | sed '/^Copying/d;/^$/d;/^ /d' | indent
+$PYTHON_EXE $BUILD_DIR/manage.py collectstatic --noinput  2>&1 | sed '/^Copying/d;/^$/d;/^ /d' | indent
 
 puts-step "Compressing" 
-python $BUILD_DIR/manage.py compress 2>&1 | indent
+$PYTHON_EXE $BUILD_DIR/manage.py compress 2>&1 | indent
 
 puts-step "Migrating" 
-python $BUILD_DIR/manage.py migrate
+$PYTHON_EXE $BUILD_DIR/manage.py migrate

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+
+indent() {
+    sed -u "s/^/       /"
+}
+
+puts-step() {
+    echo "-----> $@"
+}
+
+
+puts-step("Collecting static")
+python manage.py collectstatic --noinput  2>&1 | sed '/^Copying/d;/^$/d;/^ /d' | indent
+
+puts-step("Compressing")
+python manage.py compress 2>&1 | indent

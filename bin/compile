@@ -10,11 +10,11 @@ puts-step() {
 }
 
 
-puts-step("Collecting static")
+puts-step "Collecting static" 
 python manage.py collectstatic --noinput  2>&1 | sed '/^Copying/d;/^$/d;/^ /d' | indent
 
-puts-step("Compressing")
+puts-step "Compressing" 
 python manage.py compress 2>&1 | indent
 
-puts-step("Migrating")
+puts-step "Migrating" 
 python manage.py migrate
